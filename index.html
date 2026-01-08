@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invito Speciale - In Attesa...</title>
+    <title>Invito Matrimonio - Apri la Lettera</title>
     
     <link rel="preload" href="LETTERA.png" as="image">
 
     <style>
-        /* RESET CSS BASE */
+        /* ==================== STILI BASE ==================== */
         html, body {
             margin: 0;
             padding: 0;
@@ -16,13 +16,13 @@
             height: 100%;
             overflow: hidden; 
             font-family: 'Georgia', serif; 
-            background-color: #f8f5ed; 
+            background-color: #f8f5ed; /* Sfondo leggermente color crema */
             display: flex; 
             justify-content: center;
             align-items: center;
         }
 
-        /* CONTAINER PRINCIPALE DELLA BUSTA */
+        /* ==================== CONTAINER BUSTA ==================== */
         .envelope-container {
             width: 100vw;
             height: 100vh;
@@ -31,83 +31,60 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: transparent; 
             overflow: hidden; 
             
-            /* Impostazioni 3D per la rotazione */
+            /* Impostazioni 3D per la rotazione (Effetto WOW) */
             perspective: 1000px;
-            transition: transform 0.8s ease-in-out, opacity 0.5s ease-out; /* Transizione per l'effetto WOW e la scomparsa */
+            transition: opacity 0.4s ease-out; /* Transizione per la scomparsa finale (400ms) */
         }
 
-        /* IMMAGINE DELLA BUSTA */
+        /* ==================== IMMAGINE BUSTA ==================== */
         .envelope-image {
-            max-width: 90%; /* Lascia un po' di spazio per lo zoom 3D */
+            /* Per adattarsi allo schermo del telefono */
+            max-width: 90%; 
             max-height: 90%; 
             object-fit: contain; 
             display: block; 
             user-select: none; 
             -webkit-user-drag: none; 
             
-            /* Animazione sottile di pulsazione */
+            /* Animazione sottile per invitare al click */
             animation: pulse 2s infinite alternate ease-in-out; 
-            transition: transform 0.8s ease-in-out;
+            transition: transform 0.6s ease-in-out; /* Durata dell'effetto WOW (600ms) */
         }
 
-        /* ANIMAZIONE SOTTILE DI PULSAZIONE */
+        /* Animazione di pulsazione */
         @keyframes pulse {
             0% { transform: scale(1); }
             100% { transform: scale(1.005); } 
         }
 
-        /* EFFETTO FLASH SCHERMO BIANCO */
-        .flash-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: white;
-            opacity: 0; 
-            pointer-events: none; 
-            z-index: 100; 
-            transition: opacity 0.2s ease-out; 
-        }
-
-        /* STATO "APERTO" / EFFETTO WOW */
+        /* ==================== STATO APERTURA (CLIC) ==================== */
+        /* Effetto WOW 3D */
         .envelope-container.is-opened .envelope-image {
-            /* Rotazione drammatica (Flip in avanti) */
+            /* Ruota e ingrandisce l'immagine per un effetto drammatico */
             transform: rotateX(15deg) rotateY(15deg) scale(1.5);
-            
-            /* Opzionale: Aggiungi un'ombra per drammaticità */
-            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5); /* Ombra per profondità */
         }
 
-        /* Busta scompare DOPO l'animazione WOW */
+        /* Scomparsa finale (dopo l'effetto WOW) */
         .envelope-container.is-hiding {
             opacity: 0;
         }
         
-        /* QUANDO IL FLASH È ATTIVO */
-        .flash-overlay.is-active {
-            opacity: 1; 
-        }
     </style>
 </head>
 <body>
 
     <div id="envelopeContainer" class="envelope-container">
-        <img src="LETTERA.PNG" alt="Busta elegante con sigillo" class="envelope-image">
+        <img src="LETTERA.png" alt="Busta elegante con sigillo" class="envelope-image">
     </div>
-
-    <div id="flashOverlay" class="flash-overlay"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const envelopeContainer = document.getElementById('envelopeContainer');
-            const flashOverlay = document.getElementById('flashOverlay');
             const redirectUrl = 'pagina-info.html'; 
             
-            // Variabile per evitare click multipli
             let isAnimating = false;
 
             envelopeContainer.addEventListener('click', () => {
@@ -119,19 +96,17 @@
                 // 1. INIZIA EFFETTO WOW (Zoom e Rotazione 3D)
                 envelopeContainer.classList.add('is-opened');
 
-                // 2. Dopo l'animazione WOW (tempo = transition CSS, 800ms)
+                // 2. Dopo l'animazione WOW (600ms)
                 setTimeout(() => {
-                    // Avvia la scomparsa della busta
+                    // Avvia la dissolvenza (400ms)
                     envelopeContainer.classList.add('is-hiding'); 
                     
-                    // Attiva il flash
-                    flashOverlay.classList.add('is-active');
-
-                    // 3. Dopo il flash, reindirizza
+                    // 3. Reindirizzamento dopo la dissolvenza (600ms + 400ms = 1000ms totali)
                     setTimeout(() => {
                         window.location.replace(redirectUrl);
-                    }, 300); // Durata del flash
-                }, 800); // Durata dell'animazione WOW
+                    }, 400); 
+
+                }, 600); 
             });
         });
     </script>
