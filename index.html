@@ -6,17 +6,12 @@
 <title>Invito Matrimonio</title>
 
 <style>
-body {
+html, body {
     margin: 0;
-    font-family: 'Georgia', serif;
-    background-image: url("sfondo-lilla.png");
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    padding: 0;
+    height: 100%;
     overflow: hidden;
+    font-family: 'Georgia', serif;
 }
 
 /* FLASH / fascio di luce */
@@ -33,53 +28,73 @@ body {
     z-index: 50;
 }
 
-/* BUSTA FULL SCREEN MOBILE (verticale) */
+/* BUSTA FULL SCREEN */
 .envelope {
-    width: 90vw;
-    height: 90vh;
-    max-width: 400px;  /* smartphone */
-    max-height: 700px;
+    width: 100vw;
+    height: 100vh;
     position: relative;
     perspective: 1000px;
     cursor: pointer;
-    z-index: 10;
-    display: flex;
 }
 
-/* Lati della busta */
-.left-side, .right-side {
-    width: 50%;
+/* Corpo della busta (parte lunga) */
+.body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, #e2d3bd, #f0e4cf);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-    transform-origin: left center;
+    background: linear-gradient(180deg, #e2d3bd, #f0e4cf);
+    z-index: 1;
+}
+
+/* Lati corti fissi (superiore e inferiore) */
+.top-edge, .bottom-edge {
+    position: absolute;
+    width: 100%;
+    height: 8%;
+    background: linear-gradient(145deg, #d8c5a5, #f5e9d9);
+    z-index: 2;
+}
+
+/* Lato superiore */
+.top-edge {
+    top: 0;
+    transform-origin: top center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* Lato inferiore */
+.bottom-edge {
+    bottom: 0;
+    transform-origin: bottom center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Animazione apertura flap superiore */
+.envelope.open .top-edge {
+    transform: rotateX(-180deg);
     transition: transform 1s ease-in-out;
-    border-radius: 5px;
 }
 
-.right-side {
-    transform-origin: right center;
-}
-
-/* Quando aperta: lati si aprono verso destra e sinistra */
-.envelope.open .left-side {
-    transform: rotateY(-180deg);
-}
-.envelope.open .right-side {
-    transform: rotateY(180deg);
+/* Animazione apertura flap inferiore */
+.envelope.open .bottom-edge {
+    transform: rotateX(180deg);
+    transition: transform 1s ease-in-out;
 }
 </style>
 </head>
 
 <body>
 
-<!-- BUSTA VERTICALE FULL SCREEN -->
 <div class="envelope" id="envelope">
-    <div class="left-side"></div>
-    <div class="right-side"></div>
+    <div class="body"></div>
+    <div class="top-edge"></div>
+    <div class="bottom-edge"></div>
 </div>
 
-<!-- FLASH -->
 <div class="flash" id="flash"></div>
 
 <script>
@@ -87,14 +102,14 @@ const envelope = document.getElementById('envelope');
 const flash = document.getElementById('flash');
 
 envelope.addEventListener('click', () => {
-    // 1️⃣ Lati della busta si aprono
+    // 1️⃣ Apri flap superiore e inferiore
     envelope.classList.add('open');
 
     // 2️⃣ Dopo breve delay, mostra flash e sparisci busta
     setTimeout(() => {
         flash.style.opacity = '1';
         envelope.style.opacity = '0';
-    }, 800); // apertura busta prima del flash
+    }, 800); // apertura flap prima del flash
 
     // 3️⃣ Redirect automatico a pagina-info.html
     setTimeout(() => {
