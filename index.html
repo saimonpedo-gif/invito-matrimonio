@@ -43,7 +43,6 @@ body {
     box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     perspective: 1000px;
     transition: opacity 0.3s ease;
-    z-index: 10;
     border-radius: 15px;
 }
 
@@ -71,7 +70,7 @@ body {
     <div class="flap"></div>
 </div>
 
-<!-- FLASH / fascio di luce -->
+<!-- FLASH -->
 <div class="flash" id="flash"></div>
 
 <script>
@@ -79,13 +78,13 @@ const envelope = document.getElementById('envelope');
 const flash = document.getElementById('flash');
 
 envelope.addEventListener('click', () => {
-    // 1️⃣ Apri flap busta
+    // 1️⃣ Apri flap della busta
     envelope.classList.add('open');
 
-    // 2️⃣ Mostra flash breve
+    // 2️⃣ Mostra flash bianco breve
     flash.style.opacity = '1';
 
-    // 3️⃣ Sparisci la busta quasi subito
+    // 3️⃣ Sparisci busta durante il flash
     setTimeout(() => {
         envelope.style.opacity = '0';
         flash.style.opacity = '0.9';
