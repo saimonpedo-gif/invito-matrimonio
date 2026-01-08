@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dettagli Matrimonio</title>
+<title>Informazioni Matrimonio</title>
 
 <style>
 body {
@@ -16,123 +16,85 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden;
 }
 
-/* CONTAINER LETTERA */
-.container {
+/* CONTENITORE CENTRATO */
+.info-container {
     width: 90vw;
     max-width: 900px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.98), rgba(250,245,255,0.98));
     padding: 40px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    border-radius: 25px;
+    border: 2px solid rgba(107,62,127,0.2);
+    box-shadow: inset 0 0 30px rgba(107,62,127,0.1), 0 15px 50px rgba(0,0,0,0.4);
     text-align: center;
-    opacity: 0;
-    transform: scale(0.8);
-    animation: fadeInZoom 1s forwards;
 }
 
-/* ANIMAZIONE CONTAINER */
-@keyframes fadeInZoom {
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* H1 */
+/* TITOLI E TESTO */
 h1 {
-    font-size: 3em;
-    color: #6b3e7f;
+    font-size: 32px;
     margin-bottom: 20px;
-    opacity: 0;
-    animation: glowText 1s forwards;
-    animation-delay: 0.5s;
+    color: #6b3e7f;
 }
 
-/* SEZIONI */
 .section {
-    font-size: 1.3em;
-    margin: 15px 0;
-    line-height: 1.5em;
-    opacity: 0;
-    animation: glowText 1s forwards;
-}
-
-.section:nth-of-type(1) { animation-delay: 1s; }
-.section:nth-of-type(2) { animation-delay: 1.5s; }
-.section:nth-of-type(3) { animation-delay: 2s; }
-.section:nth-of-type(4) { animation-delay: 2.5s; }
-
-/* ANIMAZIONE GLOW TESTO */
-@keyframes glowText {
-    0% { opacity: 0; text-shadow: 0 0 0px #fff; }
-    50% { opacity: 1; text-shadow: 0 0 20px #f8e8ff; }
-    100% { opacity: 1; text-shadow: 0 0 5px #fff; }
+    margin-top: 15px;
+    font-size: 18px;
 }
 
 iframe {
     width: 100%;
-    height: 300px;
+    height: 250px;
     border: none;
-    border-radius: 12px;
     margin-top: 15px;
+    border-radius: 6px;
 }
 
-/* FORM */
 input, textarea, button {
     width: 100%;
-    margin-top: 10px;
-    padding: 12px;
+    margin-top: 8px;
+    padding: 10px;
     font-family: inherit;
-    font-size: 1em;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    opacity: 0;
-    animation: glowText 1s forwards;
 }
 
-input:nth-of-type(1) { animation-delay: 3s; }
-input:nth-of-type(2) { animation-delay: 3.2s; }
-textarea { animation-delay: 3.4s; }
-button { animation-delay: 3.6s; background: #b89acb; color: white; border: none; cursor: pointer; transition: 0.3s; }
+button {
+    background: #b89acb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 10px 0;
+}
 
 button:hover {
     background: #a883bc;
-    transform: scale(1.05);
 }
 </style>
 </head>
 
 <body>
-
-<div class="container">
+<div class="info-container">
     <h1>💍 Simone & Daniela 💍</h1>
 
     <div class="section">
-        📅 <strong>Data:</strong> 18 Luglio 2026<br>
-        🕒 <strong>Ora:</strong> 16:00
+        Con immensa gioia vi invitiamo a celebrare il nostro matrimonio
     </div>
 
     <div class="section">
-        📍 <strong>Luogo della cerimonia</strong>
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2893.559822322636!2d7.574151515887515!3d44.72912330359386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12cd4db10ea2b78f%3A0x815027b82c9a04a6!2sChiesa%20di%20San%20Martino!5e0!3m2!1sit!2sit!4v1698675300000!5m2!1sit!2sit"
-            allowfullscreen=""
-            loading="lazy">
-        </iframe>
+        <strong>📅 Data:</strong> 18 Luglio 2026<br>
+        <strong>🕒 Ora:</strong> 16:00<br>
+        <strong>📍 Luogo:</strong> Chiesa di San Martino
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.256!2d7.5763407!3d44.7291233!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12cd4db10ea2b78f%3A0x815027b82c9a04a6!2sChiesa%20di%20San%20Martino!5e0!3m2!1sit!2sit!4v1600000000000!5m2!1sit!2sit"></iframe>
     </div>
 
     <div class="section">
-        💝 <strong>Regalo</strong><br>
+        💝 Regalo:<br>
         Il dono più grande sarà avervi con noi.<br>
-        Per chi desidera contribuire:<br>
-        <strong>IBAN:</strong> IT00 X000 0000 0000 0000 000
+        Per chi desidera: <strong>IBAN:</strong> IT00 X000 0000 0000 0000 000
     </div>
 
     <div class="section">
-        ✅ <strong>Conferma partecipazione</strong>
+        ✅ Conferma partecipazione
         <form action="https://formspree.io/f/xaqnrzyd" method="POST">
             <input type="text" name="nome" placeholder="Il tuo nome" required>
             <input type="number" name="persone" placeholder="Numero di persone" required>
@@ -141,6 +103,5 @@ button:hover {
         </form>
     </div>
 </div>
-
 </body>
 </html>
