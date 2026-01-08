@@ -29,7 +29,7 @@ body {
     background: white;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.6s ease-out;
+    transition: opacity 0.3s ease-out; /* flash più breve */
     z-index: 50;
 }
 
@@ -42,7 +42,7 @@ body {
     cursor: pointer;
     box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     perspective: 1000px;
-    transition: transform 0.8s ease, opacity 0.6s ease;
+    transition: opacity 0.4s ease;
     z-index: 10;
     border-radius: 15px;
 }
@@ -55,7 +55,7 @@ body {
     clip-path: polygon(0 0, 50% 50%, 100% 0);
     background: linear-gradient(145deg, #d8c5a5, #f5e9d9);
     transform-origin: top center;
-    transition: transform 1s ease-in-out;
+    transition: transform 0.8s ease-in-out;
 }
 
 .envelope.open .flap {
@@ -67,7 +67,7 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.5) rotateY(90deg);
+    transform: translate(-50%, -50%);
     width: 90vw;
     height: 90vh;
     max-width: 900px;
@@ -76,17 +76,10 @@ body {
     border-radius: 25px;
     border: 2px solid rgba(107,62,127,0.2);
     box-shadow: inset 0 0 30px rgba(107,62,127,0.1), 0 15px 50px rgba(0,0,0,0.4);
-    display: flex;
+    display: none; /* nascosta inizialmente */
     justify-content: center;
     align-items: center;
-    opacity: 0;
     z-index: 20;
-    transition: transform 1s ease, opacity 0.6s ease;
-}
-
-.letter.show {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1) rotateY(0deg);
 }
 </style>
 </head>
@@ -110,25 +103,25 @@ const flash = document.getElementById('flash');
 const letter = document.getElementById('letter');
 
 envelope.addEventListener('click', () => {
-    // 1️⃣ Apri la busta
+    // 1️⃣ Apri flap busta
     envelope.classList.add('open');
 
-    // 2️⃣ Mostra la lettera full screen
-    letter.classList.add('show');
-
-    // 3️⃣ Attiva il flash / fascio di luce
+    // 2️⃣ Mostra il flash
     flash.style.opacity = '1';
 
-    // 4️⃣ Dopo 0.8 secondi, fai sparire la busta
+    // 3️⃣ La lettera appare subito durante il flash
+    letter.style.display = 'flex';
+
+    // 4️⃣ Sparisci la busta quasi subito
     setTimeout(() => {
         envelope.style.opacity = '0';
-        flash.style.opacity = '0.9';
-    }, 800);
+        flash.style.opacity = '0'; // flash brevissimo
+    }, 300); // flash dura solo 0.3 secondi
 
-    // 5️⃣ Dopo 1.6 secondi, apri la pagina info
+    // 5️⃣ Dopo breve delay, apri pagina info
     setTimeout(() => {
         window.location.href = 'pagina-info.html';
-    }, 1600);
+    }, 800);
 });
 </script>
 
