@@ -29,4 +29,124 @@ body {
     background: #efe6d8;
     position: relative;
     cursor: pointer;
-    b
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    transition: transform 0.8s;
+}
+
+.envelope.open {
+    transform: scale(1.05);
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #e2d3bd;
+    clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 0, 0 0);
+}
+
+/* LETTERA */
+.letter {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 310px;
+    background: rgba(255, 255, 255, 0.94);
+    padding: 20px;
+    display: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 6px;
+}
+
+.envelope.open .letter {
+    display: block;
+}
+
+h1 {
+    text-align: center;
+    font-size: 22px;
+}
+
+.section {
+    margin-top: 18px;
+    font-size: 14px;
+    text-align: center;
+}
+
+iframe {
+    width: 100%;
+    height: 200px;
+    border: none;
+    margin-top: 10px;
+    border-radius: 6px;
+}
+
+input, textarea, button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px;
+    font-family: inherit;
+}
+
+button {
+    background: #b89acb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background: #a883bc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="envelope" onclick="this.classList.toggle('open')">
+    <div class="flap"></div>
+
+    <div class="letter">
+        <h1>💍 Ci sposiamo 💍</h1>
+
+        <div class="section">
+            Con immensa gioia vi invitiamo a celebrare il nostro matrimonio
+        </div>
+
+        <div class="section">
+            <strong>Nome Sposo & Nome Sposa</strong><br>
+            📅 12 Luglio 2026<br>
+            🕒 Ore 16:00
+        </div>
+
+        <div class="section">
+            📍 <strong>Luogo della cerimonia</strong>
+            <iframe 
+                src="https://www.google.com/maps?q=Duomo+di+Milano&output=embed">
+            </iframe>
+        </div>
+
+        <div class="section">
+            💝 <strong>Regalo</strong><br>
+            Il dono più grande sarà avervi con noi.<br>
+            Per chi lo desiderasse:<br><br>
+            <strong>IBAN:</strong><br>
+            IT00 X000 0000 0000 0000 000
+        </div>
+
+        <div class="section">
+            ✅ <strong>Conferma partecipazione</strong>
+            <form action="https://formspree.io/f/XXXXXXXX" method="POST">
+                <input type="text" name="nome" placeholder="Il tuo nome" required>
+                <input type="number" name="persone" placeholder="Numero di persone" required>
+                <textarea name="messaggio" placeholder="Messaggio per gli sposi"></textarea>
+                <button type="submit">Conferma</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
