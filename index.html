@@ -19,7 +19,7 @@ body {
     overflow: hidden;
 }
 
-/* FLASH */
+/* FLASH SCHERMO */
 .flash {
     position: fixed;
     top: 0;
@@ -82,13 +82,14 @@ body {
     text-align: center;
 }
 
+/* LETTERA VISIBILE QUANDO APERTA */
 .envelope.open .letter {
     display: flex;
     transform: scale(1) rotateY(0deg);
     opacity: 1;
 }
 
-/* TESTO */
+/* TESTO LETTERA */
 h1 {
     font-size: 3em;
     margin-bottom: 20px;
@@ -167,7 +168,7 @@ envelope.addEventListener('click', () => {
     setTimeout(() => flash.style.opacity = '0', 500);
 });
 
-// Vai alla seconda pagina
+// Bottone per andare alla pagina info
 goNext.addEventListener('click', () => {
     window.location.href = 'pagina-info.html';
 });
