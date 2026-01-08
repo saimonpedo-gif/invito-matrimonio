@@ -6,6 +6,7 @@
     <title>Invito Matrimonio - Apri la Lettera</title>
     
     <link rel="preload" href="LETTERA.png" as="image">
+    <link rel="preload" href="APERTURA.mp4" as="video">
 
     <style>
         /* ==================== STILI BASE ==================== */
@@ -14,7 +15,7 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden; /* Impedisce lo scroll */
+            overflow: hidden; 
             font-family: 'Georgia', serif; 
             background-color: #f8f5ed; 
             display: flex; 
@@ -22,92 +23,125 @@
             align-items: center;
         }
 
-        /* ==================== CONTAINER BUSTA ==================== */
-        .envelope-container {
+        /* ==================== CONTAINER PRINCIPALE ==================== */
+        .content-wrapper {
             width: 100vw;
             height: 100vh;
-            cursor: pointer;
             position: relative; 
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; 
-            
-            /* Impostazioni 3D per la rotazione (Effetto WOW) */
-            perspective: 1000px;
-            transition: opacity 0.4s ease-out; /* Transizione per la scomparsa finale (400ms) */
+            overflow: hidden;
         }
 
-        /* ==================== IMMAGINE BUSTA (FULL SCREEN COVER) ==================== */
+        /* ==================== IMMAGINE BUSTA (STATICA INGRANDITA) ==================== */
         .envelope-image {
-            /* Impostazione per coprire l'intera area, tagliando i margini se necessario */
-            width: 200%; 
-            height: 200%; 
-            object-fit: cover; /* NUOVA REGOLA: Copre l'intera area viewport */
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
             display: block; 
+            cursor: pointer; 
+            transition: opacity 0.5s ease-out; 
             user-select: none; 
             -webkit-user-drag: none; 
             
-            /* Animazione sottile per invitare al click */
+            /* INGRANDIMENTO PERMANENTE AL 150% */
+            transform: scale(1.5); 
+            
+            /* Animazione sottile di pulsazione */
             animation: pulse 2s infinite alternate ease-in-out; 
-            transition: transform 0.6s ease-in-out; /* Durata dell'effetto WOW (600ms) */
         }
 
-        /* Animazione di pulsazione */
+        /* La pulsazione ora oscilla tra scale(1.5) e scale(1.505) */
         @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.005); } 
+            0% { transform: scale(1.5); }
+            100% { transform: scale(1.505); } 
         }
 
-        /* ==================== STATO APERTURA (CLIC) ==================== */
-        /* Effetto WOW 3D */
-        .envelope-container.is-opened .envelope-image {
-            /* Ruota e ingrandisce l'immagine per un effetto drammatico */
-            transform: rotateX(15deg) rotateY(15deg) scale(1.5);
-            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5); /* Ombra per profondità */
+        /* ==================== VIDEO (NASCOSTO INIZIALMENTE) ==================== */
+        .envelope-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            opacity: 0; /* Nascosto inizialmente */
+            pointer-events: none; 
+            transition: opacity 0.5s ease-in;
+            z-index: 10;
         }
 
-        /* Scomparsa finale (dopo l'effetto WOW) */
-        .envelope-container.is-hiding {
+        /* Stato attivo per il video */
+        .envelope-video.is-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Nascondi l'immagine quando il video si attiva */
+        .envelope-image.is-hidden {
             opacity: 0;
+            pointer-events: none;
         }
         
     </style>
 </head>
 <body>
 
-    <div id="envelopeContainer" class="envelope-container">
-        <img src="LETTERA.png" alt="Busta elegante con sigillo" class="envelope-image">
+    <div class="content-wrapper">
+        
+        <img id="envelopeImage" src="LETTERA.png" alt="Busta elegante con sigillo" class="envelope-image">
+        
+        <video id="envelopeVideo" class="envelope-video" playsinline>
+            <source src="APERTURA.mp4" type="video/mp4">
+            Il tuo browser non supporta la riproduzione del video.
+        </video>
+
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const envelopeContainer = document.getElementById('envelopeContainer');
+            const envelopeImage = document.getElementById('envelopeImage');
+            const envelopeVideo = document.getElementById('envelopeVideo');
             const redirectUrl = 'pagina-info.html'; 
             
             let isAnimating = false;
 
-            envelopeContainer.addEventListener('click', () => {
+            envelopeImage.addEventListener('click', () => {
                 if (isAnimating) {
                     return;
                 }
                 isAnimating = true;
 
-                // 1. INIZIA EFFETTO WOW (Zoom e Rotazione 3D)
-                envelopeContainer.classList.add('is-opened');
+                // 1. Dissolvi l'immagine statica
+                envelopeImage.classList.add('is-hidden');
 
-                // 2. Dopo l'animazione WOW (600ms)
+                // 2. Dopo una breve attesa per la dissolvenza (500ms)
                 setTimeout(() => {
-                    // Avvia la dissolvenza (400ms)
-                    envelopeContainer.classList.add('is-hiding'); 
+                    // 3. Mostra e avvia il video
+                    envelopeVideo.classList.add('is-active');
                     
-                    // 3. Reindirizzamento dopo la dissolvenza (600ms + 400ms = 1000ms totali)
-                    setTimeout(() => {
-                        window.location.replace(redirectUrl);
-                    }, 400); 
+                    const playPromise = envelopeVideo.play();
 
-                }, 600); 
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                            console.error("Errore nella riproduzione video:", error);
+                            // Se fallisce, reindirizza dopo un ritardo per evitare che l'utente rimanga bloccato
+                            setTimeout(() => {
+                                window.location.replace(redirectUrl);
+                            }, 3000); 
+                        });
+                    }
+
+                }, 500);
+
             });
+
+            // 4. Reindirizzamento automatico alla fine del video
+            envelopeVideo.addEventListener('ended', () => {
+                window.location.replace(redirectUrl);
+            });
+            
         });
     </script>
 
