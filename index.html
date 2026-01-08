@@ -6,7 +6,6 @@
 <title>Il nostro matrimonio</title>
 
 <style>
-/* BODY */
 body {
     margin: 0;
     font-family: 'Georgia', serif;
@@ -20,7 +19,7 @@ body {
     overflow: hidden;
 }
 
-/* FLASH / FASCIO DI LUCE */
+/* FLASH / fascio di luce */
 .flash {
     position: fixed;
     top: 0;
@@ -43,7 +42,7 @@ body {
     cursor: pointer;
     box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     perspective: 1000px;
-    transition: transform 0.8s ease;
+    transition: transform 0.8s ease, opacity 0.6s ease;
     z-index: 10;
     border-radius: 15px;
 }
@@ -89,13 +88,6 @@ body {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1) rotateY(0deg);
 }
-
-.letter.hide {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(2) rotateY(0deg);
-}
-
-/* NESSUN TESTO ALL’INTERNO */
 </style>
 </head>
 
@@ -109,7 +101,7 @@ body {
 <!-- LETTERA FULLSCREEN -->
 <div class="letter" id="letter"></div>
 
-<!-- FLASH / FASCIO DI LUCE -->
+<!-- FLASH / fascio di luce -->
 <div class="flash" id="flash"></div>
 
 <script>
@@ -118,7 +110,7 @@ const flash = document.getElementById('flash');
 const letter = document.getElementById('letter');
 
 envelope.addEventListener('click', () => {
-    // 1️⃣ Animazione busta aperta
+    // 1️⃣ Apri la busta
     envelope.classList.add('open');
 
     // 2️⃣ Mostra la lettera full screen
@@ -127,12 +119,11 @@ envelope.addEventListener('click', () => {
     // 3️⃣ Attiva il flash / fascio di luce
     flash.style.opacity = '1';
 
-    // 4️⃣ Dopo 1 secondo, fai sparire la lettera
+    // 4️⃣ Dopo 0.8 secondi, fai sparire la busta
     setTimeout(() => {
-        letter.classList.remove('show');
-        letter.classList.add('hide');
+        envelope.style.opacity = '0';
         flash.style.opacity = '0.9';
-    }, 1000);
+    }, 800);
 
     // 5️⃣ Dopo 1.6 secondi, apri la pagina info
     setTimeout(() => {
