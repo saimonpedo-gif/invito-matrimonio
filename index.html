@@ -19,17 +19,18 @@ body {
     overflow: hidden;
 }
 
-/* FLASH SCHERMO */
+/* FLASH SCHERMO / FASCIO DI LUCE */
 .flash {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(255,255,255,0.8);
+    background: white;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.8s ease-out;
+    z-index: 50;
 }
 
 /* BUSTA */
@@ -42,6 +43,7 @@ body {
     box-shadow: 0 10px 35px rgba(0,0,0,0.3);
     perspective: 1000px;
     transition: transform 0.8s ease;
+    z-index: 10;
 }
 
 .flap {
@@ -64,113 +66,72 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%) scale(0.5) rotateY(90deg);
     width: 90vw;
     height: 90vh;
     max-width: 900px;
     max-height: 700px;
     background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    display: flex;
+    display: flex; 
     flex-direction: column;
     justify-content: center;
     align-items: center;
     box-shadow: 0 15px 40px rgba(0,0,0,0.4);
     border-radius: 20px;
-    transform: scale(0.5) rotateY(90deg);
     opacity: 0;
-    transition: transform 1s ease, opacity 1s ease;
-    text-align: center;
+    transition: transform 1s ease, opacity 0.5s ease;
+    z-index: 20;
 }
-
-/* LETTERA VISIBILE QUANDO APERTA */
-.envelope.open .letter {
-    display: flex;
-    transform: scale(1) rotateY(0deg);
+.letter.show {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotateY(0deg);
 }
-
-/* TESTO LETTERA */
-h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-    color: #6b3e7f;
-}
-
-.section {
-    font-size: 1.3em;
-    margin: 12px 0;
-    line-height: 1.5em;
-}
-
-button {
-    margin-top: 20px;
-    background: #b89acb;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    padding: 12px 20px;
-    font-size: 1.1em;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #a883bc;
-    transform: scale(1.05);
+.letter.hide {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2) rotateY(0deg);
 }
 </style>
 </head>
 
 <body>
 
+<!-- BUSTA -->
 <div class="envelope" id="envelope">
     <div class="flap"></div>
-
-    <div class="letter" id="letter">
-        <h1>💍 Ci sposiamo 💍</h1>
-
-        <div class="section">
-            Con immensa gioia vi invitiamo a celebrare il nostro matrimonio
-        </div>
-
-        <div class="section">
-            <strong>Simone & Daniela</strong><br>
-            📅 18 Luglio 2026<br>
-            🕒 Ore 16:00
-        </div>
-
-        <div class="section">
-            📍 Luogo della cerimonia
-        </div>
-
-        <div class="section">
-            💝 Regalo<br>
-            Il dono più grande sarà avervi con noi.
-        </div>
-
-        <button id="goNext">Vedi dettagli</button>
-    </div>
 </div>
 
+<!-- LETTERA FULLSCREEN (vuota) -->
+<div class="letter" id="letter"></div>
+
+<!-- FLASH / fascio di luce -->
 <div class="flash" id="flash"></div>
 
 <script>
 const envelope = document.getElementById('envelope');
 const flash = document.getElementById('flash');
 const letter = document.getElementById('letter');
-const goNext = document.getElementById('goNext');
 
 envelope.addEventListener('click', () => {
+    // 1️⃣ Apri la busta
     envelope.classList.add('open');
 
-    // FLASH effetto luce
-    flash.style.opacity = '1';
-    setTimeout(() => flash.style.opacity = '0', 500);
-});
+    // 2️⃣ Mostra la lettera
+    letter.classList.add('show');
 
-// Bottone per andare alla pagina info
-goNext.addEventListener('click', () => {
-    window.location.href = 'pagina-info.html';
+    // 3️⃣ Attiva il flash / fascio di luce
+    flash.style.opacity = '1';
+
+    // 4️⃣ Dopo 1 secondo, fai sparire la lettera nel fascio di luce
+    setTimeout(() => {
+        letter.classList.remove('show');
+        letter.classList.add('hide');
+        flash.style.opacity = '0.9'; // intensifica fascio
+    }, 1000);
+
+    // 5️⃣ Dopo 1.6 secondi, apri la pagina info
+    setTimeout(() => {
+        window.location.href = 'pagina-info.html';
+    }, 1600);
 });
 </script>
 
